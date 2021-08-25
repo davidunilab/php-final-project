@@ -27,7 +27,7 @@ class LecturerFactory extends Factory
         return [
             "name"=> $this->faker->name(),
             "email"=> $this->faker->unique()->safeEmail(),
-            "img"=> $this->faker->imageUrl(),
+            "img"=> "https://source.unsplash.com/random/200x200?face&sig=".$this->faker->numberBetween(1,100),
             "phone"=> $this->faker->phoneNumber(),
             "cv"=> $this->faker->url(),
             "about"=> $this->faker->text(850),

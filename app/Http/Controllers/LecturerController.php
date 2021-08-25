@@ -14,7 +14,8 @@ class LecturerController extends Controller
      */
     public function index()
     {
-        return view("lecturers.list");
+        $lecturers = Lecturer::all();
+        return view("lecturers.list", ['lecturers'=>$lecturers]);
     }
 
     /**
@@ -86,6 +87,7 @@ class LecturerController extends Controller
 
     public function details($id)
     {
-        return $id;
+        $lecturer = Lecturer::where('id',$id)->first();
+        return view('lecturers.details', ['lecturer'=>$lecturer]);
     }
 }
