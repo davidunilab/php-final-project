@@ -22,12 +22,16 @@
     <div class="row mt-5">
         <div class="col-6">
             <h3 class="text-center">აკადემიური ქულა</h3>
+            <canvas id="academic" width="400" height="400"></canvas>
         </div>
         <div class="col-6">
             <h3 class="text-center">პიროვნული ქულა</h3>
+            <canvas id="personal" width="400" height="400"></canvas>
         </div>
     </div>
 
 </div>
+
+
 
 @endsection
