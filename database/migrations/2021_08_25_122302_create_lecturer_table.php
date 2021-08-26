@@ -13,7 +13,7 @@ class CreateLecturerTable extends Migration
      */
     public function up()
     {
-        Schema::create('lecturer', function (Blueprint $table) {
+        Schema::create('lecturers', function (Blueprint $table) {
             $table->id();
             $table->string("name");
             $table->string("email")->unique();
@@ -34,6 +34,6 @@ class CreateLecturerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lecturer');
+        Schema::dropIfExists('lecturers');
     }
 }

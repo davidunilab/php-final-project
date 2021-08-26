@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lecturer extends Model
 {
-    protected $table = "lecturer";
     use HasFactory;
+
+    public function personal()
+    {
+        return $this->hasMany(Personal::class);
+    }
+
+    public function academic()
+    {
+        return $this->hasMany(Academic::class);
+
+    }
 }
