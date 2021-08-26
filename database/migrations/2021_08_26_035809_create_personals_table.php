@@ -22,6 +22,7 @@ class CreatePersonalsTable extends Migration
             $table->integer("isempatic");
             $table->integer("islovely");
             $table->foreignId("lecturer_id");
+            $table->foreignId("user_id");
             $table->timestamps();
         });
     }

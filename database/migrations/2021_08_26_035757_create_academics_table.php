@@ -22,6 +22,7 @@ class CreateAcademicsTable extends Migration
             $table->integer("homeworkcount");
             $table->integer("communication");
             $table->foreignId("lecturer_id");
+            $table->foreignId("user_id");
             $table->timestamps();
         });
     }

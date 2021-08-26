@@ -29,6 +29,7 @@ class PersonalFactory extends Factory
             "isempatic" => $this->faker->numberBetween(1,100),
             "islovely" => $this->faker->numberBetween(1,100),
             "lecturer_id" => $this->faker->numberBetween(1,10),
+            "user_id" => $this->faker->numberBetween(1,5),
         ];
     }
 }
