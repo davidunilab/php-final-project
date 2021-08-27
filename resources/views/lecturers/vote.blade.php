@@ -2,6 +2,16 @@
 
 @section('content')
     <div class="container">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <p>ხმის მიცემა ხდება 0-10 შკალით. ასევე შესაძლებელი მხოლოდ აკადემიური ან მხოლოდ პიროვნული თვისებების შეფასება. </p>
         <form action="{{route('lecturer.votesave',['id'=>$lecturer->id])}}" method="post">
             <div class="row mt-5">

@@ -145,6 +145,24 @@ class LecturerController extends Controller
         $user_id = Auth::user()->id;
         $academic = Academic::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer_id)->first();
         $personal = Personal::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer_id)->first();
+
+
+        \request()->validate([
+            'diction' => 'required|min:1|max:10',
+            'explain' => 'required|min:1|max:10',
+            'involved' => 'required|min:1|max:10',
+            'homeworkeasy' => 'required|min:1|max:10',
+            'homeworkcount' => 'required|min:1|max:10',
+            'communication' => 'required|min:1|max:10',
+            'givepoints' => 'required|min:1|max:10',
+            'isgood' => 'required|min:1|max:10',
+            'hastact' => 'required|min:1|max:10',
+            'isorganised' => 'required|min:1|max:10',
+            'isempatic' => 'required|min:1|max:10',
+            'islovely' => 'required|min:1|max:10',
+        ]);
+
+
         if (!is_null($academic) ) {
             $academic->diction = \request('diction');
             $academic->explain = \request('explain');
@@ -195,16 +213,18 @@ class LecturerController extends Controller
 
         $academicPoints = 0;
         $personalPoints = 0;
+
         $academic = DB::table('academics')
-                    ->select(DB::raw(
-                        "avg(`diction`) as `diction`,
-                        avg(`explain`) as `explain`,
-                        avg(`involved`) as `involved`,
-                        avg(`homeworkeasy`) as `homeworkeasy`,
-                        avg(`homeworkcount`) as `homeworkcount`,
-                        avg(`communication`) as `communication`
-                        "))
-                    ->where("lecturer_id", $lecturer_id)->first();
+                ->select(DB::raw(
+                    "avg(`diction`) as `diction`,
+                    avg(`explain`) as `explain`,
+                    avg(`involved`) as `involved`,
+                    avg(`homeworkeasy`) as `homeworkeasy`,
+                    avg(`homeworkcount`) as `homeworkcount`,
+                    avg(`communication`) as `communication`
+                    "))
+                ->where("lecturer_id", $lecturer_id)
+            ->first();
         foreach ($academic as $a){ $academicPoints += $a;}
 
 
@@ -217,7 +237,8 @@ class LecturerController extends Controller
                         avg(`isempatic`) as `isempatic`,
                         avg(`islovely`) as `islovely`
                         "))
-            ->where("lecturer_id", $lecturer_id)->first();
+            ->where("lecturer_id", $lecturer_id)
+            ->first();
         foreach ($personal as $p){ $personalPoints += $p;}
 
         $l = Lecturer::find($lecturer_id);
@@ -226,5 +247,7 @@ class LecturerController extends Controller
         $l->save();
 
     }
+
+
 
 }

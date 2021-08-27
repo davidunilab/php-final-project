@@ -5,7 +5,7 @@
         <form action="{{route("lecturer.search")}}" method="get">
         <div class="row">
             <div class="input-group mb-2">
-                <input type="text" class="form-control" placeholder="ლექტორის ძიება" aria-label="lecturer" name="search" aria-describedby="button-search">
+                <input type="text" class="form-control" placeholder="ლექტორის ძიება" aria-label="lecturer" name="search" value="{{request('search')}}" aria-describedby="button-search">
                 <button class="btn btn-outline-secondary" type="submit" id="button-search">მოძებნა</button>
             </div>
         </div>
