@@ -24,6 +24,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix("lecturer")->group(function() {
     Route::get('/', [App\Http\Controllers\LecturerController::class, 'index'])->name('lecturer');
     Route::get('/details/{id}', [App\Http\Controllers\LecturerController::class, 'details'])->name('lecturer.details');
+    Route::get('/statistics/{id}', [App\Http\Controllers\LecturerController::class, 'getStatistics'])->name('lecturer.statistics');
+    Route::get('/search/', [App\Http\Controllers\LecturerController::class, 'search'])->name('lecturer.search');
+    Route::get('/vote/{id}', [App\Http\Controllers\LecturerController::class, 'vote'])->name('lecturer.vote');
+    Route::post('/vote/{id}', [App\Http\Controllers\LecturerController::class, 'votesave'])->name('lecturer.votesave');
 });
 
 

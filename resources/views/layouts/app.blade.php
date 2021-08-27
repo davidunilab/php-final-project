@@ -16,8 +16,10 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <script defer src="https://pro.fontawesome.com/releases/v5.10.0/js/all.js" integrity="sha384-G/ZR3ntz68JZrH4pfPJyRbjW+c0+ojii5f+GYiYwldYU69A+Ejat6yIfLSxljXxD" crossorigin="anonymous"></script>
 
     <!-- Styles -->
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -29,6 +31,12 @@
                 </a>
                 <a class="navbar-brand" href="{{ route('lecturer') }}">
                     {{ __("Lecturers")}}
+                </a>
+                <a class="navbar-brand" href="{{ route('lecturer') }}">
+                    {{ __("Faculties")}}
+                </a>
+                <a class="navbar-brand" href="{{ route('lecturer') }}">
+                    {{ __("Subjects")}}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

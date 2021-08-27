@@ -2,26 +2,34 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
+        <form action="{{route("lecturer.search")}}" method="get">
+        <div class="row">
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" placeholder="ლექტორის ძიება" aria-label="lecturer" name="search" aria-describedby="button-search">
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">მოძებნა</button>
+            </div>
+        </div>
+        </form>
+
 
                     <div class="row">
                     @foreach ($lecturers as $lecturer)
                     <div class="col-sm-3 mt-4">
                     <div class="card" >
-                            <img src="{{$lecturer->img}}" class="card-img-top" alt="...">
+                            <img src="{{ $lecturer->img }}" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title ">
                                     <a href="{{ route('lecturer.details', ["id"=>$lecturer->id]) }}">
-                                        <p class="card-text">{{$lecturer->name}}</p>
+                                        <p class="card-text"> {{ $lecturer->name }} </p>
                                     </a></h5>
                             </div>
                         <ul class="list-group list-group-flush">
-                                <li class="list-group-item">აკადემიური ქულა <span class="badge badge-primary"> {{$lecturer->academicrank}}</span> </li>
-                                <li class="list-group-item">პერსონალური ქულა <span class="badge badge-primary"> {{$lecturer->personalrank}}</span> </li>
+                                <li class="list-group-item">აკადემიური ქულა <span class="badge badge-primary"> {{ $lecturer->academicrank }} </span> </li>
+                                <li class="list-group-item">პერსონალური ქულა <span class="badge badge-primary"> {{ $lecturer->personalrank }} </span> </li>
                             </ul>
                             <div class="card-body">
                                 <a href="{{ route('lecturer.details', ["id"=>$lecturer->id]) }}" type="button" class="btn btn-outline-primary">მეტი</a>
-                                <a href="#" type="button" class="btn btn-outline-primary" >შედარება</a>
+                                <a href="{{ route('lecturer.vote', ["id"=> $lecturer->id]) }}" type="button" class="btn btn-outline-primary" >ხმის მიცემა</a>
                             </div>
                         </div>
                     </div>
@@ -43,6 +51,5 @@
                     </ul>
                 </nav>
             </div>
-        </div>
     </div>
 @endsection

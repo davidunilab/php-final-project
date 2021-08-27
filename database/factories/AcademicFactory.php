@@ -22,12 +22,12 @@ class AcademicFactory extends Factory
     public function definition()
     {
         return [
-            "diction" => $this->faker->numberBetween(1,100),
-            "explain" => $this->faker->numberBetween(1,100),
-            "involved" => $this->faker->numberBetween(1,100),
-            "homeworkeasy" => $this->faker->numberBetween(1,100),
-            "homeworkcount" => $this->faker->numberBetween(1,100),
-            "communication" => $this->faker->numberBetween(1,100),
+            "diction" => $this->faker->numberBetween(1,10),
+            "explain" => $this->faker->numberBetween(1,10),
+            "involved" => $this->faker->numberBetween(1,10),
+            "homeworkeasy" => $this->faker->numberBetween(1,10),
+            "homeworkcount" => $this->faker->numberBetween(1,10),
+            "communication" => $this->faker->numberBetween(1,10),
             "lecturer_id" => $this->faker->numberBetween(1,10),
             "user_id" => $this->faker->numberBetween(1,5),
         ];

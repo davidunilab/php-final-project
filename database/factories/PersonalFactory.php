@@ -22,12 +22,12 @@ class PersonalFactory extends Factory
     public function definition()
     {
         return [
-            "givepoints" => $this->faker->numberBetween(1,100),
-            "isgood" => $this->faker->numberBetween(1,100),
-            "hastact" => $this->faker->numberBetween(1,100),
-            "isorganised" => $this->faker->numberBetween(1,100),
-            "isempatic" => $this->faker->numberBetween(1,100),
-            "islovely" => $this->faker->numberBetween(1,100),
+            "givepoints" => $this->faker->numberBetween(1,10),
+            "isgood" => $this->faker->numberBetween(1,10),
+            "hastact" => $this->faker->numberBetween(1,10),
+            "isorganised" => $this->faker->numberBetween(1,10),
+            "isempatic" => $this->faker->numberBetween(1,10),
+            "islovely" => $this->faker->numberBetween(1,10),
             "lecturer_id" => $this->faker->numberBetween(1,10),
             "user_id" => $this->faker->numberBetween(1,5),
         ];
