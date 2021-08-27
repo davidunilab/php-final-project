@@ -22,17 +22,15 @@ class LecturerFactory extends Factory
      */
     public function definition()
     {
-
-
         return [
             "name"=> $this->faker->name(),
             "email"=> $this->faker->unique()->safeEmail(),
-            "img"=> "https://source.unsplash.com/random/200x200?face&sig=".$this->faker->numberBetween(1,100),
+            "img"=> "https://source.unsplash.com/random/200x200?face&sig=".$this->faker->numberBetween(1,1000),
             "phone"=> $this->faker->phoneNumber(),
             "cv"=> $this->faker->url(),
             "about"=> $this->faker->text(850),
-            "academicrank"=> $this->faker->numberBetween(1,100),
-            "personalrank"=> $this->faker->numberBetween(1,100)
+            "academicrank"=> 0,
+            "personalrank"=> 0
         ];
     }
 }

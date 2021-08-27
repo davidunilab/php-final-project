@@ -89,6 +89,7 @@
             <div class="d-flex justify-content-evenly">
                 <button class="btn btn-success" type="submit">შენახვა</button>
                 <a href="{{route("lecturer")}}" class="btn btn-outline-danger" type="button">ლექტორები</a>
+                <a href="{{route("lecturer.details",['id'=> $lecturer->id])}}" class="btn btn-outline-info" type="button">დეტალები</a>
             </div>
         </form>
     </div>

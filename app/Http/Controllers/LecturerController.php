@@ -7,7 +7,8 @@ use App\Models\Lecturer;
 use App\Models\Personal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Hamcrest\Core\IsNull;
+use Illuminate\Support\Facades\DB;
+
 
 class LecturerController extends Controller
 {
@@ -144,8 +145,7 @@ class LecturerController extends Controller
         $user_id = Auth::user()->id;
         $academic = Academic::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer_id)->first();
         $personal = Personal::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer_id)->first();
-        if ($academic)) {
-            dd($academic);
+        if (!is_null($academic) ) {
             $academic->diction = \request('diction');
             $academic->explain = \request('explain');
             $academic->involved = \request('involved');
@@ -161,11 +161,11 @@ class LecturerController extends Controller
             $academic->homeworkeasy = \request('homeworkeasy');
             $academic->homeworkcount = \request('homeworkcount');
             $academic->communication = \request('communication');
-            $personal->lecturer_id = $lecturer_id;
-            $personal->user_id = $user_id;
+            $academic->lecturer_id = $lecturer_id;
+            $academic->user_id = $user_id;
             $academic->save();
         }
-        if (notNullValue($personal)) {
+        if (!is_null($personal)) {
             $personal->givepoints = \request('givepoints');
             $personal->isgood = \request('isgood');
             $personal->hastact = \request('hastact');
@@ -185,8 +185,46 @@ class LecturerController extends Controller
             $personal->user_id = $user_id;
             $personal->save();
         }
-
+        $this->updateSummedPoints($lecturer_id);
 
         return redirect()->back();
     }
+
+    public function updateSummedPoints($lecturer_id)
+    {
+
+        $academicPoints = 0;
+        $personalPoints = 0;
+        $academic = DB::table('academics')
+                    ->select(DB::raw(
+                        "avg(`diction`) as `diction`,
+                        avg(`explain`) as `explain`,
+                        avg(`involved`) as `involved`,
+                        avg(`homeworkeasy`) as `homeworkeasy`,
+                        avg(`homeworkcount`) as `homeworkcount`,
+                        avg(`communication`) as `communication`
+                        "))
+                    ->where("lecturer_id", $lecturer_id)->first();
+        foreach ($academic as $a){ $academicPoints += $a;}
+
+
+        $personal = DB::table('personals')
+            ->select(DB::raw(
+                "avg(`givepoints`) as `givepoints`,
+                        avg(`isgood`) as `isgood`,
+                        avg(`hastact`) as `hastact`,
+                        avg(`isorganised`) as `isorganised`,
+                        avg(`isempatic`) as `isempatic`,
+                        avg(`islovely`) as `islovely`
+                        "))
+            ->where("lecturer_id", $lecturer_id)->first();
+        foreach ($personal as $p){ $personalPoints += $p;}
+
+        $l = Lecturer::find($lecturer_id);
+        $l->personalrank = $personalPoints;
+        $l->academicrank = $academicPoints;
+        $l->save();
+
+    }
+
 }
