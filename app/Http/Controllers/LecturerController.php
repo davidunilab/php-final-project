@@ -8,6 +8,7 @@ use App\Models\Personal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 
 class LecturerController extends Controller
@@ -95,7 +96,13 @@ class LecturerController extends Controller
     public function details($id)
     {
         $lecturer = Lecturer::where('id',$id)->first();
-        return view('lecturers.details', ['lecturer'=>$lecturer]);
+        $academicVoteCount = Academic::where('lecturer_id', $id)->count();
+        $personalVoteCount = Personal::where('lecturer_id', $id)->count();
+        return view('lecturers.details', [
+            'lecturer'=>$lecturer,
+            'personalVoteCount'=>$personalVoteCount,
+            'academicVoteCount'=>$academicVoteCount
+        ]);
     }
 
     public function getStatistics($lecturer_id , $json = true)
@@ -147,20 +154,20 @@ class LecturerController extends Controller
         $personal = Personal::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer_id)->first();
 
 
-        \request()->validate([
-            'diction' => 'required|min:1|max:10',
-            'explain' => 'required|min:1|max:10',
-            'involved' => 'required|min:1|max:10',
-            'homeworkeasy' => 'required|min:1|max:10',
-            'homeworkcount' => 'required|min:1|max:10',
-            'communication' => 'required|min:1|max:10',
-            'givepoints' => 'required|min:1|max:10',
-            'isgood' => 'required|min:1|max:10',
-            'hastact' => 'required|min:1|max:10',
-            'isorganised' => 'required|min:1|max:10',
-            'isempatic' => 'required|min:1|max:10',
-            'islovely' => 'required|min:1|max:10',
-        ]);
+        Validator::make(\request()->all(), [
+            'diction' => 'required|integer|numeric|min:0|max:10',
+            'explain' => 'required|integer|numeric|min:0|max:10',
+            'involved' => 'required|integer|numeric|min:0|max:10',
+            'homeworkeasy' => 'required|integer|numeric|min:0|max:10',
+            'homeworkcount' => 'required|integer|numeric|min:0|max:10',
+            'communication' => 'required|integer|numeric|min:0|max:10',
+            'givepoints' => 'required|integer|numeric|min:0|max:10',
+            'isgood' => 'required|integer|numeric|min:0|max:10',
+            'hastact' => 'required|integer|numeric|min:0|max:10',
+            'isorganised' => 'required|integer|numeric|min:0|max:10',
+            'isempatic' => 'required|integer|numeric|min:0|max:10',
+            'islovely' => 'required|integer|numeric|min:0|max:10',
+        ])->validate();
 
 
         if (!is_null($academic) ) {
@@ -242,8 +249,8 @@ class LecturerController extends Controller
         foreach ($personal as $p){ $personalPoints += $p;}
 
         $l = Lecturer::find($lecturer_id);
-        $l->personalrank = $personalPoints;
-        $l->academicrank = $academicPoints;
+        $l->personalrank = $personalPoints * 100 / 60;
+        $l->academicrank = $academicPoints * 100 / 60;
         $l->save();
 
     }

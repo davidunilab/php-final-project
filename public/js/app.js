@@ -1910,6 +1910,9 @@ if (document.getElementById('academic') && document.getElementById('personal')) 
   var academic = document.getElementById('academic').getContext('2d');
   var personal = document.getElementById('personal').getContext('2d');
   var lecturer = document.querySelector('#charts .lecturer-id');
+  var votesAcademic = document.querySelector('#charts .academic').dataset.voters;
+  var votesPersonal = document.querySelector('#charts .personal').dataset.voters;
+  console.log(votesAcademic, votesPersonal);
   axios({
     method: 'get',
     url: "/lecturer/statistics/" + lecturer.dataset.lecturer
@@ -1920,7 +1923,7 @@ if (document.getElementById('academic') && document.getElementById('personal')) 
       data: {
         labels: ['კარგი დიქცია', 'ახსნის უნარი', 'დაინტერესებულეობა სტუდენტით', 'დავალებების სიმარტივე', 'დავალებების სიმრავლე', 'კომუნიკაცია'],
         datasets: [{
-          label: '# of Votes',
+          label: "".concat(votesAcademic, " Votes"),
           data: Object.values(data.academic),
           backgroundColor: backgroundColor,
           borderColor: borderColor,
@@ -1940,7 +1943,7 @@ if (document.getElementById('academic') && document.getElementById('personal')) 
       data: {
         labels: ['ქულებს კარგად წერს', 'მომწონს', 'ტაქტიანია', 'ორგანიზებულია', 'გამგებია', 'საყვარელია'],
         datasets: [{
-          label: '# of Votes',
+          label: "".concat(votesPersonal, " Votes"),
           data: Object.values(data.personal),
           backgroundColor: backgroundColor,
           borderColor: borderColor,

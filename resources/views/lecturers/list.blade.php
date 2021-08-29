@@ -24,11 +24,15 @@
                                     </a></h5>
                             </div>
                         <ul class="list-group list-group-flush">
-                                <li class="list-group-item">აკადემიური ქულა <span class="badge badge-primary"> {{ $lecturer->academicrank }} </span> </li>
-                                <li class="list-group-item">პერსონალური ქულა <span class="badge badge-primary"> {{ $lecturer->personalrank }} </span> </li>
+                                <li class="list-group-item">აკადემიური ქულა
+                                    <x-package-progressbar :rank="$lecturer->academicrank"/>
+                                </li>
+                                <li class="list-group-item">პერსონალური ქულა
+                                    <x-package-progressbar :rank="$lecturer->personalrank"/>
+                                </li>
                             </ul>
                             <div class="card-body">
-                                <a href="{{ route('lecturer.details', ["id"=>$lecturer->id]) }}" type="button" class="btn btn-outline-primary">მეტი</a>
+                                <a href="{{ route('lecturer.details', ["id"=>$lecturer->id]) }}" type="button" class="btn btn-outline-primary">ნახვა</a>
                                 <a href="{{ route('lecturer.vote', ["id"=> $lecturer->id]) }}" type="button" class="btn btn-outline-primary" >ხმის მიცემა</a>
                             </div>
                         </div>

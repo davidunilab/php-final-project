@@ -56,7 +56,9 @@ if (document.getElementById('academic') && document.getElementById('personal')) 
     var academic = document.getElementById('academic').getContext('2d');
     var personal = document.getElementById('personal').getContext('2d');
     var lecturer = document.querySelector('#charts .lecturer-id');
-
+    var votesAcademic = document.querySelector('#charts .academic').dataset.voters;
+    var votesPersonal = document.querySelector('#charts .personal').dataset.voters;
+    console.log(votesAcademic, votesPersonal);
     axios({
         method: 'get',
         url: "/lecturer/statistics/" + lecturer.dataset.lecturer
@@ -75,7 +77,7 @@ if (document.getElementById('academic') && document.getElementById('personal')) 
                     'კომუნიკაცია'
                 ],
                 datasets: [{
-                    label: '# of Votes',
+                    label: `${votesAcademic} Votes`,
                     data: Object.values(data.academic),
                     backgroundColor,
                     borderColor,
@@ -104,7 +106,7 @@ if (document.getElementById('academic') && document.getElementById('personal')) 
                     'საყვარელია',
                 ],
                 datasets: [{
-                    label: '# of Votes',
+                    label: `${votesPersonal} Votes`,
                     data: Object.values(data.personal),
                     backgroundColor,
                     borderColor,
