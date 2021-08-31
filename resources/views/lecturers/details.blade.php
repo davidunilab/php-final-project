@@ -41,6 +41,17 @@
         </div>
     </div>
 
+
+@if($comments)
+<div class="mt-5 mb-5">
+    <h2 class="mb-3">კომენტარები</h2>
+    @foreach($comments as $comment)
+    <x-lecturers.comment :comments="$comment"/>
+    @endforeach
+</div>
+@else
+    <p>კომენტარები ჯერ არ არსებობს.</p>
+@endif
 </div>
 
 

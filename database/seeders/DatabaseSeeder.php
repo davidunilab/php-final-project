@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             LecturerSeeder::class,
             AcademicSeeder::class,
             PersonalSeeder::class,
+            CommentsSeeder::class,
         ]);
     }
 }

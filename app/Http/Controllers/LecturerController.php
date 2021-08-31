@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Academic;
+use App\Models\Comments;
 use App\Models\Lecturer;
 use App\Models\Personal;
 use Illuminate\Http\Request;
@@ -98,10 +99,12 @@ class LecturerController extends Controller
         $lecturer = Lecturer::where('id',$id)->first();
         $academicVoteCount = Academic::where('lecturer_id', $id)->count();
         $personalVoteCount = Personal::where('lecturer_id', $id)->count();
+        $comments = Comments::where("lecturer_id", $id)->get();
         return view('lecturers.details', [
             'lecturer'=>$lecturer,
             'personalVoteCount'=>$personalVoteCount,
-            'academicVoteCount'=>$academicVoteCount
+            'academicVoteCount'=>$academicVoteCount,
+            'comments'=>$comments
         ]);
     }
 
