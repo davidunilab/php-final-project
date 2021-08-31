@@ -94,13 +94,22 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">კომენტარი</label>
+                        <textarea class="form-control" id="comment" name="comment" rows="5">{{@$comment->comment}}</textarea>
+                    </div>
+                </div>
             </div>
             <div class="d-flex justify-content-evenly">
                 <button class="btn btn-success" type="submit">შენახვა</button>
                 <a href="{{route("lecturer")}}" class="btn btn-outline-danger" type="button">ლექტორები</a>
                 <a href="{{route("lecturer.details",['id'=> $lecturer->id])}}" class="btn btn-outline-info" type="button">დეტალები</a>
             </div>
+
         </form>
     </div>
 

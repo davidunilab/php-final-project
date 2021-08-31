@@ -146,8 +146,8 @@ class LecturerController extends Controller
         $lecturer = Lecturer::where('id',$id)->first();
         $vote['academic'] = Academic::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer->id)->first();
         $vote['personal'] = Personal::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer->id)->first();
-
-        return view('lecturers.vote',['lecturer' => $lecturer, 'vote'=>$vote]);
+        $comment = Comments::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer->id)->first();
+        return view('lecturers.vote',['lecturer' => $lecturer, 'vote'=>$vote, 'comment'=>$comment]);
     }
     public function votesave($lecturer_id)
     {
@@ -155,6 +155,7 @@ class LecturerController extends Controller
         $user_id = Auth::user()->id;
         $academic = Academic::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer_id)->first();
         $personal = Personal::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer_id)->first();
+        $comment = Comments::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer->id)->first();
 
 
         Validator::make(\request()->all(), [
@@ -213,6 +214,23 @@ class LecturerController extends Controller
             $personal->user_id = $user_id;
             $personal->save();
         }
+
+        $getComment = \request("comment");
+
+        if (is_null($comment)) {
+            $comment = new Comments();
+        } else {
+            $comment->delete();
+        };
+
+        if(!is_null($getComment)) {
+            $comment->comment = \request("comment");
+            $comment->lecturer_id = $lecturer_id;
+            $comment->user_id = $user_id;
+            $comment->save();
+        }
+
+
         $this->updateSummedPoints($lecturer_id);
 
         return redirect()->back();
