@@ -99,7 +99,7 @@ class LecturerController extends Controller
         $lecturer = Lecturer::where('id',$id)->first();
         $academicVoteCount = Academic::where('lecturer_id', $id)->count();
         $personalVoteCount = Personal::where('lecturer_id', $id)->count();
-        $comments = Comments::where("lecturer_id", $id)->get();
+        $comments = Comments::with('user')->where("lecturer_id", $id)->get();
         return view('lecturers.details', [
             'lecturer'=>$lecturer,
             'personalVoteCount'=>$personalVoteCount,
