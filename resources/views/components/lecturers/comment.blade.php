@@ -1,6 +1,6 @@
 <div class="card mb-3">
     <div class="card-header">
-    <!-- {{ $comments->user->name }} -->
+    <!-- {{ $comments->user->name ?? '' }} -->
         Anonymous -
         <small class="text-muted"> {{ \Carbon\Carbon::parse($comments->created_at)->diffForHumans() }}</small>
     </div>
