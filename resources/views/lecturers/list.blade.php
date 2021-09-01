@@ -14,20 +14,20 @@
 
                     <div class="row">
                     @foreach ($lecturers as $lecturer)
-                    <div class="col-sm-3 mt-4">
+                    <div class="col-lg-3 col-md-4 col-sm-12 mt-4">
                     <div class="card" >
-                            <img src="{{ $lecturer->img }}" class="card-img-top" alt="...">
+                            <img src="{{url('images')}}/{{ $lecturer->img }}" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title ">
+                                <h6 class="card-title ">
                                     <a href="{{ route('lecturer.details', ["id"=>$lecturer->id]) }}">
                                         <p class="card-text"> {{ $lecturer->name }} </p>
-                                    </a></h5>
+                                    </a></h6>
                             </div>
                         <ul class="list-group list-group-flush">
                                 <li class="list-group-item">აკადემიური ქულა
                                     <x-package-progressbar :rank="$lecturer->academicrank"/>
                                 </li>
-                                <li class="list-group-item">პერსონალური ქულა
+                                <li class="list-group-item">პიროვნული ქულა
                                     <x-package-progressbar :rank="$lecturer->personalrank"/>
                                 </li>
                             </ul>
