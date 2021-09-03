@@ -19,4 +19,8 @@ class Lecturer extends Model
         return $this->hasMany(Academic::class);
 
     }
+
+    public function getStatisticCacheKey(){
+        return $this->id . 'getStatisticCacheKey';
+    }
 }
