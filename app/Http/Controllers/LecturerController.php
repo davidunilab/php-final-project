@@ -132,8 +132,8 @@ class LecturerController extends Controller
     public function search()
     {
 
-        if (\request('search')) {
-            $term = \request('search');
+        if (request('search')) {
+            $term = request('search');
             $lecturers = Lecturer::where('name',"like", "%{$term}%")->get();
             return view("lecturers.list", ['lecturers'=>$lecturers]);
         }
@@ -143,7 +143,7 @@ class LecturerController extends Controller
 
     public function vote($id)
     {
-        $lecturer = Lecturer::where('id',$id)->first();
+        $lecturer = Lecturer::where('id',$id)->firstOrFail();
         $vote['academic'] = Academic::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer->id)->first();
         $vote['personal'] = Personal::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer->id)->first();
         $comment = Comments::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer->id)->first();
@@ -151,7 +151,7 @@ class LecturerController extends Controller
     }
     public function votesave($lecturer_id)
     {
-        $lecturer = Lecturer::where('id',$lecturer_id)->first();
+        $lecturer = Lecturer::where('id',$lecturer_id)->firstOrFail();
         $user_id = Auth::user()->id;
         $academic = Academic::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer_id)->first();
         $personal = Personal::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer_id)->first();
