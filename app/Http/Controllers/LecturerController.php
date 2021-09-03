@@ -9,6 +9,7 @@ use App\Models\Personal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -108,24 +109,29 @@ class LecturerController extends Controller
         ]);
     }
 
-    public function getStatistics($lecturer_id , $json = true)
+    public function getStatistics($lecturer_id)
     {
-        $data["academic"]["diction"] = Academic::where('lecturer_id', $lecturer_id)->avg("diction");
-        $data["academic"]["explain"] = Academic::where('lecturer_id', $lecturer_id)->avg("explain");
-        $data["academic"]["involved"] = Academic::where('lecturer_id', $lecturer_id)->avg("involved");
-        $data["academic"]["homeworkeasy"] = Academic::where('lecturer_id', $lecturer_id)->avg("homeworkeasy");
-        $data["academic"]["homeworkcount"] = Academic::where('lecturer_id', $lecturer_id)->avg("homeworkcount");
-        $data["academic"]["communication"] = Academic::where('lecturer_id', $lecturer_id)->avg("communication");
+        $cacheKey =  Lecturer::findOrFail($lecturer_id)->getStatisticCacheKey();
 
-        $data["personal"]["givepoints"] = Personal::where('lecturer_id', $lecturer_id)->avg("givepoints");
-        $data["personal"]["isgood"] = Personal::where('lecturer_id', $lecturer_id)->avg("isgood");
-        $data["personal"]["hastact"] = Personal::where('lecturer_id', $lecturer_id)->avg("hastact");
-        $data["personal"]["isorganised"] = Personal::where('lecturer_id', $lecturer_id)->avg("isorganised");
-        $data["personal"]["isempatic"] = Personal::where('lecturer_id', $lecturer_id)->avg("isempatic");
-        $data["personal"]["islovely"] = Personal::where('lecturer_id', $lecturer_id)->avg("islovely");
+       $cachedResult = Cache::remember($cacheKey, 30 * 30 * 30, function () use ($lecturer_id){
+            $data["academic"]["diction"] = Academic::where('lecturer_id', $lecturer_id)->avg("diction");
+            $data["academic"]["explain"] = Academic::where('lecturer_id', $lecturer_id)->avg("explain");
+            $data["academic"]["involved"] = Academic::where('lecturer_id', $lecturer_id)->avg("involved");
+            $data["academic"]["homeworkeasy"] = Academic::where('lecturer_id', $lecturer_id)->avg("homeworkeasy");
+            $data["academic"]["homeworkcount"] = Academic::where('lecturer_id', $lecturer_id)->avg("homeworkcount");
+            $data["academic"]["communication"] = Academic::where('lecturer_id', $lecturer_id)->avg("communication");
 
-        if ($json) return response()->json($data);
-        return $data;
+            $data["personal"]["givepoints"] = Personal::where('lecturer_id', $lecturer_id)->avg("givepoints");
+            $data["personal"]["isgood"] = Personal::where('lecturer_id', $lecturer_id)->avg("isgood");
+            $data["personal"]["hastact"] = Personal::where('lecturer_id', $lecturer_id)->avg("hastact");
+            $data["personal"]["isorganised"] = Personal::where('lecturer_id', $lecturer_id)->avg("isorganised");
+            $data["personal"]["isempatic"] = Personal::where('lecturer_id', $lecturer_id)->avg("isempatic");
+            $data["personal"]["islovely"] = Personal::where('lecturer_id', $lecturer_id)->avg("islovely");
+
+            return $data;
+        });
+
+        return $cachedResult;
     }
 
 
@@ -151,7 +157,7 @@ class LecturerController extends Controller
     }
     public function votesave($lecturer_id)
     {
-        $lecturer = Lecturer::where('id',$lecturer_id)->first();
+        $lecturer = Lecturer::where('id', $lecturer_id)->firstOrFail();
         $user_id = Auth::user()->id;
         $academic = Academic::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer_id)->first();
         $personal = Personal::where("user_id",Auth::user()->id)->where("lecturer_id", $lecturer_id)->first();
@@ -233,6 +239,7 @@ class LecturerController extends Controller
 
         $this->updateSummedPoints($lecturer_id);
 
+        Cache::forget($lecturer->getStatisticCacheKey());
         return redirect()->back();
     }
 
