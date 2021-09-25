@@ -4,6 +4,7 @@ namespace App\Providers;
 use App\View\Components\Lecturers\Progressbar;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Blade::component('package-progressbar', Progressbar::class );
+	Schema::defaultStringLength(191);
     }
 }
