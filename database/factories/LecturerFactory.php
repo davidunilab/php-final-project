@@ -29,6 +29,7 @@ class LecturerFactory extends Factory
             "phone"=> $this->faker->phoneNumber(),
             "cv"=> $this->faker->url(),
             "about"=> $this->faker->text(850),
+            "source"=> $this->faker->url(),
             "academicrank"=> 0,
             "personalrank"=> 0
         ];

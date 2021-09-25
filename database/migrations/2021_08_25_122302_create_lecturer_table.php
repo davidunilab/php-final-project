@@ -16,13 +16,14 @@ class CreateLecturerTable extends Migration
         Schema::create('lecturers', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("email")->unique();
-            $table->string("phone")->unique();
+            $table->string("email")->nullable();
+            $table->string("phone")->nullable();
             $table->string("img");
-            $table->string("cv");
+            $table->string("cv")->nullable();
             $table->text("about");
-            $table->integer("academicrank");
-            $table->integer("personalrank");
+            $table->string("source");
+            $table->integer("academicrank")->nullable();
+            $table->integer("personalrank")->nullable();
             $table->timestamps();
         });
     }

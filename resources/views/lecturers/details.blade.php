@@ -5,13 +5,13 @@
     <div class="row">
         <div class="col-10">
             <h3>{{$lecturer->name}}</h3>
-            <small class="text-muted"> აკადემიურური/პერსონალური {{$academicVoteCount}}/{{$personalVoteCount}} </small>
+            <small class="text-muted"> <a target="_blank" href="{{$lecturer->source}}">წყაროს ნახვა </a></small>
             <hr class="my-2">
             <p>{!!$lecturer->about!!}</p>
         </div>
         <div class="col-2 ">
             <img src="{{url('images')}}/{{$lecturer->img}}" class="img-fluid" alt="">
-            <a href="{{ route("lecturer.statistics", ['id'=>$lecturer->id]) }}">
+{{--            <a href="{{ route("lecturer.statistics", ['id'=>$lecturer->id]) }}">--}}
             <p class="text-center d-flex justify-content-center">
                 <span id="academic-rank" data-toggle="tooltip" data-placement="left" title="აკადემიური ქულა">{{$lecturer->academicrank}}</span>
 
@@ -19,7 +19,7 @@
 
                 <span id="personal-rank" data-toggle="tooltip" data-placement="right" title="პიროვნული ქულა">{{$lecturer->personalrank}}</span>
             </p>
-            </a>
+{{--            </a>--}}
         </div>
     </div>
     <hr class="mb-4 mt-0">
